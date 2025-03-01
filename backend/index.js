@@ -1,27 +1,25 @@
 const express = require("express");
-const connectDB = require('./config/db');
+const connectDB = require("./config/db");
 const cors = require("cors");
-const path=require("path")
+const path = require("path");
 require("dotenv").config();
-const parsingRoutes= require('./routes/parsingRoutes');
-const errorHandler = require('./middlewares/errorHandler');
+const parsingRoutes = require("./routes/parsingRoutes");
+const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
 
-const __dirname=path.resolve()
+connectDB();
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
-connectDB()
-app.use(express.static(path.join(__dirname,'/frontend/dist')))
-app.get('*',(req,res)=>{
-  res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'))
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+});
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/parsed-data', parsingRoutes);
-
+app.use("/api/parsed-data", parsingRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
