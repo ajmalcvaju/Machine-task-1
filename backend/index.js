@@ -23,6 +23,6 @@ app.use("/api/parsed-data", parsingRoutes);
 app.use(errorHandler);
 
 const PORT = 5000;
-
+ 
 // Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
